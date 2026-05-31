@@ -98,30 +98,13 @@ export default function About() {
                 <Flame className="w-4 h-4 text-brand-red" />
                 ARTIST DOSSIER
               </span>
-              
-              <h3 className="font-display text-3xl sm:text-4xl text-brand-bone tracking-wide font-medium leading-snug uppercase">
-                BREATHING RAW IMPERFECTION INTO DIGITAL CANVAS
-              </h3>
 
               <div className="font-sans text-sm sm:text-base text-neutral-400 leading-relaxed font-light space-y-4">
                 <p>
-                  Born out of the damp basements and industrial fringes of Boston, Massachusetts, 
-                  <strong className="text-brand-bone font-medium"> Dudja </strong> 
-                  stands as an uncompromising figure in the experimental music landscape. Rejecting the clean, 
-                  hyper-processed safety of modern commercial production, he has spent years building a sonic bunker where 
-                  sub-bass tremors, tape saturation, and poetic vulnerability collide in high-velocity friction.
+                  Dudja grew up around Boston and started building his sound in basements. No templates, no outside producers — everything comes from him. The music sits somewhere between alternative, electronic, and soul, with production that leans into grit instead of polish. Sub-bass, tape saturation, drum machines, real lyrics. He's been doing it for years and the catalog shows it.
                 </p>
                 <p>
-                  Dudja\'s sound is a raw physical texture. It is a dense, smoke-tinted architecture made of vintage 
-                  drum machinery, cascading analog echoes, and heavy lyrical narratives. Every single vocal line, synthesizer 
-                  swell, and metallic percussion loop is engineered in-house, ensuring that the artist’s raw, unmodified 
-                  spirit is directly embedded into the copper lines of the audio files.
-                </p>
-                <p>
-                  This is not merely entertainment. This is an ongoing battle to document real youth culture, existential solitude, 
-                  and persistent hope within the concrete canyons of the American East Coast. From the claustrophobic dread of 
-                  <em className="text-brand-red"> "Everything Is NOT Awesome!!!" </em> to the soaring, cathartic momentum of 
-                  <em className="text-brand-bone"> "Moving On"</em>, every frequency is a document of survival.
+                  The range goes from claustrophobic (<em className="text-brand-red">"Everything Is NOT Awesome!!!"</em>) to wide open (<em className="text-brand-bone">"Moving On"</em>). What stays consistent is that none of it sounds like it was made to fit anywhere. That's not an accident.
                 </p>
               </div>
             </div>
@@ -227,17 +210,7 @@ export default function About() {
               <div className="absolute bottom-0 left-0 w-24 h-24 border-b border-l border-white/5 pointer-events-none" />
 
               <div>
-                <div className="flex items-center justify-between mb-6">
-                  <span className="font-mono text-xs tracking-[0.2em] text-brand-red font-bold uppercase flex items-center gap-1.5">
-                    <Activity className="w-4 h-4 text-brand-red animate-pulse" />
-                    SONIC GEAR CATALOG
-                  </span>
-                  <span className="font-mono text-[8px] border border-brand-red/40 px-2 py-0.5 rounded text-brand-red font-bold uppercase">
-                    ACTIVE SENSORS
-                  </span>
-                </div>
-
-                <p className="font-sans text-xs text-neutral-400 max-w-sm mb-6 leading-relaxed">
+                {/* Sonic Gear Catalog removed as requested */}
                   Interactive directory highlighting the tactile stimuli and modular equipment feeding Dudja\'s current studio cycle:
                 </p>
 

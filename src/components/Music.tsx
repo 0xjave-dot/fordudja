@@ -410,8 +410,12 @@ Everything is not awesome today.`,
                       id="studio-play-pause-btn"
                       onClick={togglePreviewPlay}
                       className="p-3.5 bg-brand-red text-brand-bone hover:bg-brand-red-hover rounded-full cursor-pointer hover:scale-105 transition-transform"
+                      aria-label={isPlaying ? "Pause Spotify Preview" : "Play Spotify Preview"}
                     >
-                      {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
+                      {/* Spotify logo as button icon */}
+                      <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                        <path d="M12 1.75C6.34 1.75 1.75 6.34 1.75 12S6.34 22.25 12 22.25 22.25 17.66 22.25 12 17.66 1.75 12 1.75Zm4.7 14.78a.64.64 0 0 1-.88.21c-2.4-1.47-5.42-1.8-8.98-.98a.64.64 0 1 1-.29-1.25c3.9-.89 7.24-.51 9.94 1.13.3.19.4.58.21.89Zm1.26-2.81a.8.8 0 0 1-1.1.26c-2.75-1.69-6.94-2.18-10.2-1.19a.8.8 0 1 1-.47-1.53c3.72-1.13 8.34-.58 11.51 1.37.38.24.5.73.26 1.09Zm.11-2.92c-3.3-1.96-8.74-2.14-11.89-1.18a.96.96 0 0 1-.56-1.84c3.61-1.1 9.62-.89 13.43 1.37a.96.96 0 0 1-.98 1.65Z" />
+                      </svg>
                     </button>
                     <div>
                       <span className="font-mono text-[10px] text-white/40 uppercase block font-semibold">CONSOLE STATE</span>
