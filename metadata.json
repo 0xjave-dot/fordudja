@@ -1,0 +1,8 @@
+{
+  "name": "Dudja Official Artist Website",
+  "description": "The official artist website for Dudja, featuring discography, stream links, contact booking, and interactive merchandise boutique with Stripe checkout.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
