@@ -6,7 +6,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Play, Pause, ExternalLink, Sliders, Volume2, Music4 } from 'lucide-react';
-import { DudjaAudioSynth } from '../utils/audio';
 
 interface Track {
   id: string;
@@ -16,8 +15,8 @@ interface Track {
   type: string;
   lyrics: string;
   spotifyUrl: string;
+  previewUrl: string;
   themeColor: string;
-  albumArt: string;
 }
 
 export default function Music() {
@@ -51,9 +50,9 @@ I miss my heart... standard heavy beats...
 [Outro]
 Just a cold metal cage
 Trying to find the page.`,
-      spotifyUrl: 'https://open.spotify.com/artist/6eZ4wMPiOBjFoDeWxGabGx',
-      themeColor: '#c0392b',
-      albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop'
+      spotifyUrl: 'https://open.spotify.com/track/024LYsNZIcAOF2vfVElVwE',
+      previewUrl: 'https://p.scdn.co/mp3-preview/643c6b2a8a9d3bd86bc5ebede9c7fb4e8e54fdb7',
+      themeColor: '#c0392b'
     },
     {
       id: 'moving-on',
@@ -76,9 +75,9 @@ We\'re moving on.
 
 [Outro]
 Across the bridge, into the fog.`,
-      spotifyUrl: 'https://open.spotify.com/artist/6eZ4wMPiOBjFoDeWxGabGx',
-      themeColor: '#d35400',
-      albumArt: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=600&auto=format&fit=crop'
+      spotifyUrl: 'https://open.spotify.com/track/7q44KOaOihSlAKr7cpAP1e',
+      previewUrl: 'https://p.scdn.co/mp3-preview/1933a0d4efb70d8ec3987274aa0ef6a18879a9a5',
+      themeColor: '#d35400'
     },
     {
       id: 'egotistical-bastards',
@@ -98,9 +97,9 @@ Convinced that nobody really cares
 We\'re just egotistical bastards running in place
 Wearing a crown in a desolate space
 Fearing the mirror, loving the chase.`,
-      spotifyUrl: 'https://open.spotify.com/artist/6eZ4wMPiOBjFoDeWxGabGx',
-      themeColor: '#8e44ad',
-      albumArt: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600&auto=format&fit=crop'
+      spotifyUrl: 'https://open.spotify.com/track/3k7dh5J2jL4d7Zlp2CNpGb',
+      previewUrl: 'https://p.scdn.co/mp3-preview/f57e15fdbb851ab421cf09c94df33fe4e8859727',
+      themeColor: '#8e44ad'
     },
     {
       id: 'not-awesome',
@@ -118,16 +117,16 @@ Everything is NOT awesome, and let me be
 Rip off the bandage, show me the scars
 Living in cardboard, reaching for stars
 Everything is not awesome today.`,
-      spotifyUrl: 'https://open.spotify.com/artist/6eZ4wMPiOBjFoDeWxGabGx',
-      themeColor: '#7f8c8d',
-      albumArt: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600&auto=format&fit=crop'
+      spotifyUrl: 'https://open.spotify.com/track/69rEpCIj7VRvPL1euDjvNj',
+      previewUrl: 'https://p.scdn.co/mp3-preview/ba846c8408eff7fca396a189ec8f8728bb72e65f',
+      themeColor: '#7f8c8d'
     }
   ];
 
   const [activeTrack, setActiveTrack] = useState<Track>(tracks[0]);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [playbackProgress, setPlaybackProgress] = useState(15); // visual placeholder
-  const [audioStemsActive, setAudioStemsActive] = useState(false);
+  const [playbackProgress, setPlaybackProgress] = useState(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const visualizerInterval = useRef<NodeJS.Timeout | null>(null);
   const [framerHeights, setFramerHeights] = useState<number[]>([30, 15, 45, 60, 20, 80, 40, 10, 55, 30, 75, 45, 90, 20]);
 
@@ -151,25 +150,38 @@ Everything is not awesome today.`,
   // Clean play state on unmount
   useEffect(() => {
     return () => {
-      DudjaAudioSynth.stop();
+      audioRef.current?.pause();
     };
   }, []);
 
-  const toggleMockPlay = () => {
-    const nextPlaying = !isPlaying;
-    setIsPlaying(nextPlaying);
-    setAudioStemsActive(true);
-    if (nextPlaying) {
-      DudjaAudioSynth.play(activeTrack.id);
-    } else {
-      DudjaAudioSynth.stop();
+  const togglePreviewPlay = async () => {
+    if (isPlaying) {
+      audioRef.current?.pause();
+      setIsPlaying(false);
+      return;
     }
+
+    audioRef.current?.pause();
+    const audio = new Audio(activeTrack.previewUrl);
+    audioRef.current = audio;
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        setPlaybackProgress((audio.currentTime / audio.duration) * 100);
+      }
+    });
+    audio.addEventListener('ended', () => {
+      setIsPlaying(false);
+      setPlaybackProgress(0);
+    });
+
+    await audio.play();
+    setIsPlaying(true);
   };
 
   const handleTrackSelect = (track: Track) => {
-    DudjaAudioSynth.stop();
+    audioRef.current?.pause();
     setActiveTrack(track);
-    setPlaybackProgress(Math.floor(Math.random() * 30) + 5);
+    setPlaybackProgress(0);
     setIsPlaying(false);
   };
 
@@ -332,12 +344,19 @@ Everything is not awesome today.`,
                 {/* Visual Cover art + Playback Title */}
                 <div className="flex items-center space-x-4">
                   <div className="relative w-20 h-20 rounded-xl overflow-hidden border border-white/15 flex-shrink-0 bg-brand-bg group">
-                    <img
-                      src={activeTrack.albumArt}
-                      alt={activeTrack.title}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                    <div
+                      aria-label="Spotify"
+                      className="w-full h-full bg-[#1DB954] flex items-center justify-center group-hover:scale-105 transition-transform duration-500"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        className="w-11 h-11 text-black"
+                        fill="currentColor"
+                      >
+                        <path d="M12 1.75C6.34 1.75 1.75 6.34 1.75 12S6.34 22.25 12 22.25 22.25 17.66 22.25 12 17.66 1.75 12 1.75Zm4.7 14.78a.64.64 0 0 1-.88.21c-2.4-1.47-5.42-1.8-8.98-.98a.64.64 0 1 1-.29-1.25c3.9-.89 7.24-.51 9.94 1.13.3.19.4.58.21.89Zm1.26-2.81a.8.8 0 0 1-1.1.26c-2.75-1.69-6.94-2.18-10.2-1.19a.8.8 0 1 1-.47-1.53c3.72-1.13 8.34-.58 11.51 1.37.38.24.5.73.26 1.09Zm.11-2.92c-3.3-1.96-8.74-2.14-11.89-1.18a.96.96 0 0 1-.56-1.84c3.61-1.1 9.62-.89 13.43 1.37a.96.96 0 0 1-.98 1.65Z" />
+                      </svg>
+                    </div>
                     <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <Volume2 className="w-5 h-5 text-brand-red" />
                     </div>
@@ -389,7 +408,7 @@ Everything is not awesome today.`,
                   <div className="flex items-center space-x-4">
                     <button
                       id="studio-play-pause-btn"
-                      onClick={toggleMockPlay}
+                      onClick={togglePreviewPlay}
                       className="p-3.5 bg-brand-red text-brand-bone hover:bg-brand-red-hover rounded-full cursor-pointer hover:scale-105 transition-transform"
                     >
                       {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
@@ -397,7 +416,7 @@ Everything is not awesome today.`,
                     <div>
                       <span className="font-mono text-[10px] text-white/40 uppercase block font-semibold">CONSOLE STATE</span>
                       <span className="font-mono text-xs text-brand-bone font-bold block">
-                        {isPlaying ? 'PLAYING PREVIEW STEMS' : 'TAP PLAY TO AUDITION'}
+                        {isPlaying ? 'PLAYING SPOTIFY PREVIEW' : 'TAP PLAY FOR SPOTIFY PREVIEW'}
                       </span>
                     </div>
                   </div>
@@ -411,8 +430,8 @@ Everything is not awesome today.`,
                       />
                     </div>
                     <div className="flex justify-between font-mono text-[9px] text-[#86817a] mt-1.5 uppercase">
-                      <span>0:45 AUDITION</span>
-                      <span>{activeTrack.duration} STAGE PREVIEW</span>
+                      <span>0:00 PREVIEW</span>
+                      <span>{activeTrack.duration} FULL TRACK</span>
                     </div>
                   </div>
 

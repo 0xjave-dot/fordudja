@@ -5,39 +5,10 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Flame, Compass, HelpCircle, Activity, Heart, Quote, Radio, Zap } from 'lucide-react';
+import { Flame, Quote, Radio } from 'lucide-react';
 
 export default function About() {
   const [activeTab, setActiveTab] = useState<'credo' | 'roots' | 'notebook'>('credo');
-  const [selectedGear, setSelectedGear] = useState<string | null>(null);
-
-  const aestheticInfluences = [
-    {
-      id: 'fog',
-      title: 'Boston Winter Fog',
-      category: 'Atmosphere',
-      desc: 'The thick, saline mist rolling off the harbor and settling over Boylston Street. It blanked out the noise of the city, leaving only cold echo chambers for late-night vocal tracking.'
-    },
-    {
-      id: 'echo',
-      title: 'Space Echo RE-201',
-      category: 'Analog Gear',
-      desc: 'A legendary physical tape-delay unit. Dudja pushes it to self-oscillate, creating the cascading swell of shadows that pads the intros of tracks like "I Miss My Heart".'
-    },
-    {
-      id: 'brutalism',
-      title: 'Concrete Brutalism',
-      category: 'Architecture',
-      desc: 'Boston City Hall’s imposing concrete block. Coarse textures, massive shapes with zero ornamentation. This cold structural honesty forms the bedrock of Dudja\'s supply and sound design.'
-    },
-    {
-      id: 'fever',
-      title: 'Bedroom Tape Loops',
-      category: 'Process',
-      desc: 'Slowing down vintage soul records on cassette four-track tapes, physically warbling the spools by thumb to inject raw human imperfection into the computerized percussion grid.'
-    }
-  ];
-
   const notebookEntries = [
     {
       date: 'OCT 24, 2024',
@@ -88,11 +59,11 @@ export default function About() {
           </div>
         </div>
 
-        {/* Major Grid: Story on Left, Interactive Console on Right */}
+        {/* Major Grid: Story */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
           
-          {/* Poetic Narrative Block (6 Columns) */}
-          <div className="lg:col-span-7 flex flex-col justify-between space-y-8">
+          {/* Poetic Narrative Block */}
+          <div className="lg:col-span-12 flex flex-col justify-between space-y-8">
             <div className="space-y-6">
               <span className="font-mono text-xs tracking-[0.2em] text-brand-red font-semibold uppercase flex items-center gap-2">
                 <Flame className="w-4 h-4 text-brand-red" />
@@ -100,28 +71,15 @@ export default function About() {
               </span>
               
               <h3 className="font-display text-3xl sm:text-4xl text-brand-bone tracking-wide font-medium leading-snug uppercase">
-                BREATHING RAW IMPERFECTION INTO DIGITAL CANVAS
+                NO TEMPLATES. NO OUTSIDE PRODUCERS.
               </h3>
 
               <div className="font-sans text-sm sm:text-base text-neutral-400 leading-relaxed font-light space-y-4">
                 <p>
-                  Born out of the damp basements and industrial fringes of Boston, Massachusetts, 
-                  <strong className="text-brand-bone font-medium"> Dudja </strong> 
-                  stands as an uncompromising figure in the experimental music landscape. Rejecting the clean, 
-                  hyper-processed safety of modern commercial production, he has spent years building a sonic bunker where 
-                  sub-bass tremors, tape saturation, and poetic vulnerability collide in high-velocity friction.
+                  Dudja grew up around Boston and started building his sound in basements. No templates, no outside producers &mdash; everything comes from him. The music sits somewhere between alternative, electronic, and soul, with production that leans into grit instead of polish. Sub-bass, tape saturation, drum machines, real lyrics. He's been doing it for years and the catalog shows it.
                 </p>
                 <p>
-                  Dudja\'s sound is a raw physical texture. It is a dense, smoke-tinted architecture made of vintage 
-                  drum machinery, cascading analog echoes, and heavy lyrical narratives. Every single vocal line, synthesizer 
-                  swell, and metallic percussion loop is engineered in-house, ensuring that the artist’s raw, unmodified 
-                  spirit is directly embedded into the copper lines of the audio files.
-                </p>
-                <p>
-                  This is not merely entertainment. This is an ongoing battle to document real youth culture, existential solitude, 
-                  and persistent hope within the concrete canyons of the American East Coast. From the claustrophobic dread of 
-                  <em className="text-brand-red"> "Everything Is NOT Awesome!!!" </em> to the soaring, cathartic momentum of 
-                  <em className="text-brand-bone"> "Moving On"</em>, every frequency is a document of survival.
+                  The range goes from claustrophobic (<em className="text-brand-red">"Everything Is NOT Awesome!!!"</em>) to wide open (<em className="text-brand-bone">"Moving On"</em>). What stays consistent is that none of it sounds like it was made to fit anywhere. That's not an accident.
                 </p>
               </div>
             </div>
@@ -215,84 +173,6 @@ export default function About() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
-            </div>
-          </div>
-
-          {/* Aesthetic Interactive Directory (5 Columns) */}
-          <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
-            <div className="bg-[#050505] border border-white/10 rounded-2xl p-6 md:p-8 flex-1 flex flex-col justify-between relative overflow-hidden group">
-              {/* Corner Grid lines */}
-              <div className="absolute top-0 right-0 w-24 h-24 border-t border-r border-white/5 pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-24 h-24 border-b border-l border-white/5 pointer-events-none" />
-
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <span className="font-mono text-xs tracking-[0.2em] text-brand-red font-bold uppercase flex items-center gap-1.5">
-                    <Activity className="w-4 h-4 text-brand-red animate-pulse" />
-                    SONIC GEAR CATALOG
-                  </span>
-                  <span className="font-mono text-[8px] border border-brand-red/40 px-2 py-0.5 rounded text-brand-red font-bold uppercase">
-                    ACTIVE SENSORS
-                  </span>
-                </div>
-
-                <p className="font-sans text-xs text-neutral-400 max-w-sm mb-6 leading-relaxed">
-                  Interactive directory highlighting the tactile stimuli and modular equipment feeding Dudja\'s current studio cycle:
-                </p>
-
-                <div className="space-y-3">
-                  {aestheticInfluences.map((inf) => (
-                    <button
-                      key={inf.id}
-                      id={`gear-item-${inf.id}`}
-                      onClick={() => setSelectedGear(selectedGear === inf.id ? null : inf.id)}
-                      className={`w-full p-4 text-left border rounded-xl flex flex-col space-y-2 cursor-pointer transition-all duration-300 ${
-                        selectedGear === inf.id
-                          ? 'bg-brand-red/10 border-brand-red shadow-lg'
-                          : 'bg-[#101010]/40 border-white/5 hover:border-white/15'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="font-display text-lg text-brand-bone tracking-wide">{inf.title}</span>
-                        <span className="font-mono text-[9px] bg-white/5 px-2 py-0.5 rounded text-neutral-500 uppercase">{inf.category}</span>
-                      </div>
-
-                      <AnimatePresence initial={false}>
-                        {selectedGear === inf.id && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.25, ease: 'easeInOut' }}
-                            className="overflow-hidden"
-                          >
-                            <p className="font-sans text-xs text-neutral-400 leading-relaxed font-light pt-2 border-t border-white/5">
-                              {inf.desc}
-                            </p>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Live telemetry visualizer mock in line with branding */}
-              <div className="mt-8 p-4 bg-black/80 border border-white/5 rounded-xl flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-brand-red/10 border border-brand-red/30 flex items-center justify-center">
-                    <Zap className="w-4 h-4 text-brand-red" />
-                  </div>
-                  <div>
-                    <span className="font-mono text-[9px] text-[#86817b] uppercase block font-semibold">SIGNAL ANALYSIS</span>
-                    <span className="font-mono text-[10px] text-brand-bone block">DUMMY_SYNTH_ACTIVE_FREQ</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-red animate-ping" />
-                  <span className="font-mono text-[10px] text-neutral-500 uppercase">STREAMING</span>
-                </div>
               </div>
             </div>
           </div>
